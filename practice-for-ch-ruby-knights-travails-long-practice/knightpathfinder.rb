@@ -17,6 +17,16 @@ class KnightPathFinder
     end
 
     def new_move_positions(pos)
-        
+        valid = KnightPathFinder.valid_moves(pos)
+        valid_subset = valid.select do |option|
+            !@considered_positions.include?(option)
+        end
+
+        @considered_positions += valid_subset
+        valid_subset
+    end
+
+    def build_move_tree(starting_pos)
+
     end
 end
