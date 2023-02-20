@@ -1,3 +1,4 @@
+require_relative
 class KnightPathFinder
     DELTAS = [[2, -1], [2, 1], [-2, 1], [-2, -1], [1, 2], [1, -2], [-1, -2], [-1, 2]]
     def self.valid_moves(pos)
@@ -14,6 +15,7 @@ class KnightPathFinder
     attr_reader :considered_positions
     def initialize(starting_pos) #[num, num]
         @considered_positions = [starting_pos]
+        @root_node = PolyTreeNode.new(starting_pos)
     end
 
     def new_move_positions(pos)
@@ -32,7 +34,7 @@ class KnightPathFinder
          until queue.empty? 
             # p queue
             node = queue.shift
-            KnightPathFinder.new(node)
+            PolyTreeNode.new(node)
             queue += new_move_positions(node)
          end
 
