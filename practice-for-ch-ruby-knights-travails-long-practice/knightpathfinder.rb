@@ -11,7 +11,7 @@ class KnightPathFinder
         end
         moves
     end
-
+    attr_reader :considered_positions
     def initialize(starting_pos) #[num, num]
         @considered_positions = [starting_pos]
     end
@@ -26,16 +26,30 @@ class KnightPathFinder
         valid_subset
     end
 
-    def build_move_tree #instance
+    def build_move_tree
          queue = [@considered_positions.first]
 
          until queue.empty? 
-            p queue
+            # p queue
             node = queue.shift
             KnightPathFinder.new(node)
             queue += new_move_positions(node)
          end
 
-         p queue
+        #  p queue
+    end
+
+    def find_path(end_pos)
+        # root_tree = self.build_move_tree
+        
+        queue = [self]
+        until queue.empty?
+            node = queue.shift
+            return node if node.considered_positions.first == end_pos
+            node_children_pos = new_move_positions(node)
+            node_children_instances = node_children_pos.map { |pos| KnightPathFinder.new(pos)}
+            queue.concat(node_children_instances)
+        end
+        nil
     end
 end
