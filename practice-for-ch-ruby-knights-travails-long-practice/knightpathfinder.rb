@@ -26,7 +26,14 @@ class KnightPathFinder
         valid_subset
     end
 
-    def build_move_tree(starting_pos)
+    def build_move_tree(starting_pos) #instance
+         
+        level = new_move_positions(starting_pos) #arr of coordinates
+        return [] if level_one.empty?
+        level.each do |node|
+            new_node = KnightPathFinder.new(node)
+            build_move_tree(new_node)
+        end
 
     end
 end
